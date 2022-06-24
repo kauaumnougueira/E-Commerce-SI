@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<locale.h>
 #include<windows.h>
+#include <conio.h>
 
 /*
 BUILD: 
@@ -27,7 +28,9 @@ struct Product{
 //FIM-DATA
 
 main(){
+    //SYSTEM CONFIGS
     setlocale(LC_ALL, "portuguese");
+    system("color D");
 
     //USER INSTANCY
     struct User useratual;
@@ -38,7 +41,7 @@ main(){
     if(useratual.category == "cliente"){
         client();
     }else if(useratual.category == "funcionario"){
-        funcionary();
+        functionary();
     }else{
         error("categoria não reconhecida");
     }
@@ -50,8 +53,8 @@ void client(){
 
 }
 
-//FUNCIONARY INTERFACE
-void funcionary(){
+//FUNCTIONARY INTERFACE
+void functionary(){
 
 }
 
