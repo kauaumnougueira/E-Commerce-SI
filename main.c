@@ -7,6 +7,11 @@
 BUILD:
     #DATA
     #MAIN
+    1.1- INTERFACE INICIAL
+    1.2- INTERFACE PARA CADASTRO
+    1.3- INTERFACE DE LOGIN
+        1.31- INTERFACE DE CLIENTES
+        1.32- INTERFACE DE FUNCIONÁRIOS
     #FUNCTIONS
 */
 
@@ -25,38 +30,34 @@ struct Product{
     int quantity;
 };
 
-
-//Interface do cliente
-void client(){
-    system("cls");
-    printf("---Interface para clientes---");
-}
-
-//Interface do funcionário
-void funcionario(){
-    system("cls");
-    printf("---Interface para funcionários---");
-
-}
-
+//CHAMANDO FUNÇÕES
+void client();
+void funcionario();
+void error(char erro[]);
+void inicial(int senhaPadrao);
 
 main(){
-    //Configurações do programa
+    //CONFIGURAÇÕES DO SISTEMA
     setlocale(LC_ALL, "Portuguese");
     system("color D");
+    int senhaPadrao = 1234;
+
+    //INSTÂNCIA DO USUÁRIO
+    struct User userAtual;
+
+    //INTERFACE INICIAL
+    inicial(senhaPadrao);
+}
+
+//INTERFACE INICIAL
+void inicial(int senhaPadrao){
     int k=0;
     int categoria, senha;
-
-
-    //USER INSTANCY
-    struct User useratual;
-
-    //Interface inicial
     printf("---Seja bem-vindo à loja virtual!---\n");
     while(k==0){
-        printf("Informe a sua categoria:\n( 1 ) Cliente\n( 2 ) Funcionário\n: ");
+        printf("Informe a sua categoria:\n( 1 ) Cliente\n( 2 ) Funcionário\n> ");
         scanf("%d", &categoria);
-        //Separação de interfaces para clientes e funcionarios
+            //SEPARAÇÃO DA INTERFACE PARA CLIENTES E FUNCIONÁRIOS
             if(categoria == 1){
                 client();
                 k++;
@@ -64,21 +65,39 @@ main(){
                 system("cls");
                 printf("Digite a senha para funcionários: ");
                 scanf("%d", &senha);
-                //É necessário uma senha para abrir a interface de funcionários
+                //É NECESSÁRIO UMA SENHA PARA ACESSO DOS FUNCIONÁRIOS
                 printf("%d", senha);
-                    if(senha==1234){
+                    if(senha == senhaPadrao){
                         funcionario();
                         k++;
                     }
                     else{
                         system("cls");
-                        printf("Senha inválida.\n");
+                        error("Senhã incorreta");
                     }
 
-                }
-        if(categoria!=1 && categoria!=2){
-            system("cls");
-            printf("Categoria inválida.\n");
-        }
+            }else{
+                system("cls");
+                error("Categoria não identificada");
+            }
+
     }
 }
+
+//INTERFACE DO CLIENTE
+void client(){
+    system("cls");
+    printf("---Interface para clientes---");
+}
+
+//INTERFACE DO FUNCIONÁRIO
+void funcionario(){
+    system("cls");
+    printf("---Interface para funcionários---");
+}
+
+//ERRO ADCIONADO AO PARÂMETRO
+void error( char erro[]){
+    printf("Erro em: %s\n", erro);
+}
+
