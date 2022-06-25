@@ -1,10 +1,10 @@
-#include<stdio.h>
-#include<locale.h>
-#include<windows.h>
+#include <stdio.h>
+#include <locale.h>
+#include <windows.h>
 #include <conio.h>
 
 /*
-BUILD: 
+BUILD:
     #DATA
     #MAIN
     #FUNCTIONS
@@ -25,40 +25,44 @@ struct Product{
     int quantity;
 };
 
-//FIM-DATA
 
-main(){
-    //SYSTEM CONFIGS
-    setlocale(LC_ALL, "portuguese");
-    system("color D");
-
-    //USER INSTANCY
-    struct User useratual;
-
-    //SEPARATING INTERFACES
-    printf("Informe sua categoria(cliente/funcionario): ");
-    fgets(useratual.category, 10, stdin);
-    if(useratual.category == "cliente"){
-        client();
-    }else if(useratual.category == "funcionario"){
-        functionary();
-    }else{
-        error("categoria não reconhecida");
-    }
-}
-
-
-//CLIENT INTERFACE 
+//Interface do cliente
 void client(){
 
 }
 
-//FUNCTIONARY INTERFACE
-void functionary(){
+//Interface do funcionário
+void funcionario(){
 
 }
 
-//THE ERROR MESSAGE IN THE PARAMETER
-void error(what){
-    printf("Erro em %s", what);
+
+main(){
+    //Configurações do programa
+    setlocale(LC_ALL, "Portuguese");
+    system("color D");
+    int k=0;
+    int categoria;
+
+    //USER INSTANCY
+    struct User useratual;
+
+    //Interface inicial
+    printf("---Seja bem-vindo à loja virtual!---\n");
+    while(k==0){
+        printf("Informe a sua categoria:\n( 1 ) Cliente\n( 2 ) Funcionário\n: ");
+        scanf("%d", &categoria);
+        //Separação de interfaces para clientes e funcionarios
+            if(categoria == 1){
+                client();
+                k++;
+            }else if(categoria == 2){
+                funcionario();
+                k++;
+
+                }else{
+                    system("cls");
+                    printf("Categoria inválida.\n");
+                }
+    }
 }
