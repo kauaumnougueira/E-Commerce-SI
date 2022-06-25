@@ -28,11 +28,14 @@ struct Product{
 
 //Interface do cliente
 void client(){
-
+    system("cls");
+    printf("---Interface para clientes---");
 }
 
 //Interface do funcionário
 void funcionario(){
+    system("cls");
+    printf("---Interface para funcionários---");
 
 }
 
@@ -42,7 +45,8 @@ main(){
     setlocale(LC_ALL, "Portuguese");
     system("color D");
     int k=0;
-    int categoria;
+    int categoria, senha;
+
 
     //USER INSTANCY
     struct User useratual;
@@ -57,12 +61,24 @@ main(){
                 client();
                 k++;
             }else if(categoria == 2){
-                funcionario();
-                k++;
+                system("cls");
+                printf("Digite a senha para funcionários: ");
+                scanf("%d", &senha);
+                //É necessário uma senha para abrir a interface de funcionários
+                printf("%d", senha);
+                    if(senha==1234){
+                        funcionario();
+                        k++;
+                    }
+                    else{
+                        system("cls");
+                        printf("Senha inválida.\n");
+                    }
 
-                }else{
-                    system("cls");
-                    printf("Categoria inválida.\n");
                 }
+        if(categoria!=1 && categoria!=2){
+            system("cls");
+            printf("Categoria inválida.\n");
+        }
     }
 }
