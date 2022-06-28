@@ -1,6 +1,6 @@
 # E-Commerce-SI
 TO-DO
-- Identificação de usuário (struct{
+- Cadastro e identificação de usuário (struct{
 nome,
 função})
 - cadastrar produto (com caracteristicas -struct {
