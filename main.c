@@ -32,16 +32,17 @@ struct Product{
 
 //CHAMANDO FUNÇÕES
 void client();
-void funcionario();
+void vendedor();
+void login(struct User userAtual, struct User users[20]);
 void error(char erro[]);
 void inicial();
+void cadastro(struct User userAtual, struct User users[20]);
+void voltar();
 
 main(){
     //CONFIGURAÇÕES DO SISTEMA
     setlocale(LC_ALL, "Portuguese");
     system("color D");
-
-    
 
     //INTERFACE INICIAL
     inicial();
@@ -50,16 +51,18 @@ main(){
 //INTERFACE INICIAL
 void inicial(){
     system("cls");
+
     //INSTÂNCIA DO USUÁRIO
     struct User userAtual;
     struct User users[20];
 
     int k = 0, cadLog;
-    
+
     while(k == 0){
         printf("---Seja bem-vindo à loja virtual!---\n");
-        printf("Você deseja:\n( 1 ) Cadastrar \n( 2 ) Entrar\n> ");
+        printf("Você deseja:\n( 1 ) Fazer Cadastro \n( 2 ) Fazer Login\n> ");
         scanf("%d", &cadLog);
+        getchar(); //Soluciona erro de tipagem do input
         if(cadLog == 1){
             k++;
             cadastro(userAtual, users);
@@ -67,7 +70,8 @@ void inicial(){
             k++;
             login(userAtual, users);
         }else{
-            
+            system("cls");
+            error("Não identificado, selecione somente os números ao lado das opções\n");
         }
     }
 }
@@ -93,15 +97,20 @@ void cadastro(struct User userAtual, struct User users[20]){
     }else{
         int k = 0;
         int categoria;
-        while(k==0){
-            printf("Informe a sua categoria:\n( 1 ) Cliente\n( 2 ) Funcionário\n> ");
+        while(k == 0){
+            printf("Informe a sua categoria:\n( 1 ) Cliente\n( 2 ) Funcionário\n( 3 ) Voltar para o menu inicial\n> ");
             scanf("%d", &categoria);
+            getchar(); //Soluciona erro de tipagem do input
             //SALVANDO CATEGORIA
             if(categoria == 1){
                 strcpy(userAtual.category, "cliente");
                 k++;
             }else if(categoria == 2){
                 strcpy(userAtual.category, "funcionario");
+                k++;
+            }else if(categoria == 3){
+                system("cls");
+                voltar();
                 k++;
             }else{
                 system("cls");
@@ -112,6 +121,7 @@ void cadastro(struct User userAtual, struct User users[20]){
         char senha1[10], senha2[10];
         //CADASTRO PARA CLIENTES
         system("cls");
+        printf("CADASTRO\n");
         printf("---Interface para clientes---\n");
         printf("Digite seu nome: ");
         getchar();
@@ -144,6 +154,7 @@ void login(struct User userAtual, struct User users[20]){
     while(k==0){
         printf("Informe a sua categoria:\n( 1 ) Cliente\n( 2 ) Funcionário\n> ");
         scanf("%d", &categoria);
+        getchar(); //Soluciona erro de tipagem do input
         //SALVANDO CATEGORIA
         if(categoria == 1){
             strcpy(userAtual.category, "cliente");
@@ -161,12 +172,14 @@ void login(struct User userAtual, struct User users[20]){
     while(k == 0){
         char name[50], senha[10];
         system("cls");
+        printf("LOGIN\n");
         printf("---Interface para clientes---\n");
         printf("Digite seu nome: ");
         getchar();
         fgets(name, 50, stdin);
         if(strcmp(name, userAtual.name) < 0 || strcmp(name, userAtual.name) > 0){
-            printf("Nome não cadastrado...\n");
+            system("cls");
+            error("Nome não cadastrado...\n");
             printf("Deseja cadastrar? \n( 1 ) Sim \n( 2 ) Não");
             int escolha;
             if(escolha == 1){
@@ -204,11 +217,16 @@ void funcionario(){
 }
 
 //ERRO ADCIONADO AO PARÂMETRO
-void error( char erro[]){
+void error(char erro[]){
     printf("Erro em: %s\n", erro);
 }
 
 //SALVA TODOS STRUCTS PARA MOSTRAR
 void salvaStruct(struct User userAtual, struct User users[20], int indice){
     users[indice] = userAtual;
+}
+
+//volta
+void voltar(){
+    inicial();
 }
