@@ -131,15 +131,14 @@ void cadastro(struct User userAtual, struct User users[20], int index){
         char senha1[10], senha2[10];
         //CADASTRO
         system("cls");
-        printf("CADASTRO\n");
-        printf("---Interface para cadastro---\n");
-        printf("Digite seu nome: ");
+        printf("______________CADASTRO______________\n|");
+        printf("\n|   Digite seu nome: ");
         getchar();
         fgets(userAtual.name, 50, stdin);
          while(count == 0){
-            printf("Digite sua senha (no máximo 10 caracteres): ");
+            printf("|   Digite sua senha (no máximo 10 caracteres): ");
             fgets(senha1, 10, stdin);
-            printf("Confirme sua senha: ");
+            printf("|   Confirme sua senha: ");
             fgets(senha2, 10, stdin);
             if(strcmp(senha1, senha2) < 0 || strcmp(senha1, senha2) > 0){
                 system("cls");
@@ -147,7 +146,7 @@ void cadastro(struct User userAtual, struct User users[20], int index){
                 count=0;
             }else{
                 system("cls");
-                printf("Usuário cadastrado com sucesso!");
+                printf("Usuário cadastrado com sucesso!\n");
                 count++;
                 strcpy(userAtual.senha, senha1);
                 login(userAtual, users, index); //USUÁRIO CADASTRADO
@@ -246,6 +245,7 @@ void error(char erro[]){
 //SALVA TODOS STRUCTS PARA MOSTRAR
 void salvaStruct(struct User userAtual, struct User users[20], int indice){
     users[indice] = userAtual;
+    mostraCadastrados(users);
 }
 
 //volta
