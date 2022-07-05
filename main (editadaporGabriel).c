@@ -10,67 +10,80 @@ CORPO DO PROGRAMA:
     # MAIN:
     01 - INTERFACE INICIAL
     02 - INTERFACE PARA CADASTRO
-    03 - INTERFACE DE LOGIN{
-        3.1- INTERFACE DE CLIENTES
-        3.2- INTERFACE DE FUNCION¡RIOS
+    03 - INTERFACE DE LOGIN
+        3.1- INTERFACE DE CLIENTES\
+            > ver produtos no sistema
+            > comprar produto
+            > devolu√ß√£o de produto
+            > produtos comprados
 
-    # FUN«’ES -> declaraÁ„o inicial na linha 36 - 43, definiÁıes -> linha 55-
+        3.2- INTERFACE DE FUNCION√ÅRIOS
+            > cadastrar produtos
+            > consultar estoque de produtos cadastrados
+            > remover produto
+
+    # FUN√á√ïES -> declara√ß√£o inicial na linha 36 - 43, defini√ß√µes -> linha 55-
 */
 
-//OP«√O: ADCIONAR STRUCT PARA CATEGORIA (FUNCION¡RIO OU CLIENTE);
+/* O que falta/problemas:
+- Interface cliente e funcion√°rio;
+- Resolver problema de exibi√ß√£o de caracteres no nome de usu√°rio;
+*/
+
+//OP√á√ÉO: ADCIONAR STRUCT PARA CATEGORIA (FUNCION√ÅRIO OU CLIENTE);
 
 //# DADOS:
-struct dadosUsuario{    //Struct de armazenamento de dados do usu·rio(cliente/vendedor) do programa:
+struct dadosUsuario{    //Struct de armazenamento de dados do usu√°rio(cliente/vendedor) do programa:
     char nomeUsuario[70];
     char categoriaUsuario[10];//cliente ou vendedor;
     char senha[10];
 
 };
 
-struct dadosProduto{    //Struct de armazenamento de dados do produto do usu·rio(vendedor):
+struct dadosProduto{    //Struct de armazenamento de dados do produto do usu√°rio(vendedor):
     char nomeProduto[50];
     char descricao[250];
     int quantidade;
     float preco;
 }produto;
 
-//DeclaraÁ„o inicial de funÁıes do programa:
-void clientes(); // Interface para usu·rios do tipo clientes;
-void vendedor(); // Interface para usu·rios do tipo vendedores;
-void login(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], int indice); // Interface para login de usu·rios;
-void erros(char erro[]); // Aviso de erros na utilizaÁ„o do programa;
+//Declara√ß√£o inicial de fun√ß√µes do programa:
+void clientes(); // Interface para usu√°rios do tipo clientes;
+void vendedor(); // Interface para usu√°rios do tipo vendedores;
+void login(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], int indice); // Interface para login de usu√°rios;
+void erros(char erro[]); // Aviso de erros na utiliza√ß√£o do programa;
 void inicial();// Interface inicial;
-void cadastro(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], int indice);// Interface de cadastro de usu·rios;
+void cadastro(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], int indice);// Interface de cadastro de usu√°rios;
 void salvaStruct(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], int indice);
 void voltar(); // Retorno para a interface anterior;
 
 main(){
-//ConfiguraÁıes do sistema:
+//Configura√ß√µes do sistema:
     setlocale(LC_ALL,"Portuguese");
     system("color D");
 
     int indice = 0;
 
-    inicial(indice);//chamada da funÁ„o de interface inicial;
+    inicial(indice);//chamada da fun√ß√£o de interface inicial;
 }
 
 void inicial(int indice){
     system("cls");
-//Inst‚ncia do usu·rio:
+//Inst√¢ncia do usu√°rio:
     struct dadosUsuario usuarioAtual;
     struct dadosUsuario usuarios[20];
 
     int contador = 0, opcao;
 
     while(contador == 0){
-        printf("---------------- SEJA BEM-VINDO ¿ NOSSA LOJA VIRTUAL! ----------------\n");
-        printf("\t VocÍ deseja:\n(1) Fazer cadastro\n(2) Fazer login\n> ");
+        printf("---------------- SEJA BEM-VINDO √Ä NOSSA LOJA VIRTUAL! ----------------\n");
+        printf("\t Voc√™ deseja:\n(1) Fazer cadastro\n(2) Fazer login\n> ");
         scanf("%d",&opcao);
-        getchar(); //armazena o enter digitado apÛs a conclus„o do input;
+        getchar(); //armazena o enter digitado ap√≥s a conclus√£o do input;
 
         if(opcao == 1){
             contador++;
-            cadastro(usuarioAtual, usuarios, indice);//chamada da funÁ„o de cadastro de usu·rio;
+            cadastro(usuarioAtual, usuarios, indice);//chamada da fun√ß√£o de cadastro de usu√°rio;
 
         }else if(opcao == 2){
             contador++;
@@ -78,18 +91,19 @@ void inicial(int indice){
 
         }else{
             system("cls");
-            erros("\t OpÁ„o n„o identificada, por favor insira apenas n˙meros correspondentes aos das opÁıes exibidas.\n");
+            erros("\t Op√ß√£o n√£o identificada, por favor insira apenas n√∫meros correspondentes aos das op√ß√µes exibidas.\n");
         }
     }
 }
 
 void cadastro(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], int indice){
-//Teste para conhecimento do da existÍncia ou n„o de determinado usu·rio:
+    setlocale(LC_ALL,"Portuguese");
+//Teste para conhecimento do da exist√™ncia ou n√£o de determinado usu√°rio:
     system("cls");
     int existe = 0, naoExiste;
 
     printf("---------------- CADASTRO ----------------\n");
-//ValidaÁ„o de usu·rio a partir do nome:
+//Valida√ß√£o de usu√°rio a partir do nome:
     for(int i = 0; i < 20; i++){
         if(usuarioAtual.nomeUsuario == usuarios[i].nomeUsuario){
             existe = 1;
@@ -99,12 +113,12 @@ void cadastro(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20]
         }
     }
     if(existe == 1){
-        printf("\t Usu·rio j· cadastrado\nRedirecionando para login...");
+        printf("\t Usu√°rio j√° cadastrado\nRedirecionando para login...");
         system("pause");
         system("cls");
         login(usuarioAtual, usuarios, indice);
 
-    }else{  //CriaÁ„o de novo usu·rio:
+    }else{  //Cria√ß√£o de novo usu√°rio:
         int contador = 0, categoria;
         while(contador == 0){
             printf("\t Informe a sua categoria:\n(1) Cliente\n(2) Vendedor\n(3) Voltar para o menu inicial\n> ");
@@ -128,34 +142,34 @@ void cadastro(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20]
 
             }else{
                 system("cls");
-                erros("\t Categoria n„o identificada.");
+                erros("\t Categoria n√£o identificada.");
             }
 
         }
         contador = 0;
-        char senha1[10], senha2[10]; //senha do Usu·rio;
-        //Input de dados do novo usu·rio:
+        char senha1[10], senha2[10]; //senha do Usu√°rio;
+        //Input de dados do novo usu√°rio:
         system("cls");
         printf("---------------- CADASTRO ----------------\n");
         printf("\t Digite seu nome: ");
-        getchar();
         fgets(usuarioAtual.nomeUsuario,50,stdin);
-        //Input e confirmaÁ„o da senha:
+        //Input e confirma√ß√£o da senha:
         while(contador == 0){
-            printf("\t Digite sua senha (atÈ 10 caracteres): ");
+            printf("\t Digite sua senha (at√© 10 caracteres): ");
             fgets(senha1,10,stdin);
-            printf("\t Digite sua senha novamente para confirmaÁ„o: ");
+            printf("\t Digite sua senha novamente para confirma√ß√£o: ");
             fgets(senha2,10,stdin);
-            if(strcmp(senha1, senha2) < 0 || strcmp(senha1, senha2) > 0){
-                system("cls");
-                erros("Senhas n„o correspondentes");
+
+            if(strcmp(senha1,senha2)!=0){
+                printf("%s,%s",senha1,senha2);
+                erros("Senhas n√£o correspondentes");
                 contador=0;
             }else{
                 printf("\n\t Cadastrado!");
-                contador++;
                 strcpy(usuarioAtual.senha, senha1);
-                login(usuarioAtual, usuarios, indice); //Usu·rio cadastrado
+                contador++;
                 salvaStruct(usuarioAtual, usuarios, indice);
+                login(usuarioAtual, usuarios, indice); //Usu√°rio cadastrado
             }
         }
 
@@ -167,7 +181,7 @@ void login(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], i
     printf("---------------- LOGIN ----------------\n");
     int contador = 0, categoria;
     while(contador==0){
-        printf("\t Informe sua categoria:\n(1) Cliente\n(2) Funcion·rio\n> ");
+        printf("\t Informe sua categoria:\n(1) Cliente\n(2) Funcion√°rio\n> ");
         scanf("%d",&categoria);
         getchar();
     //Salvando a categoria:
@@ -181,7 +195,7 @@ void login(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], i
 
         }else{
             system("cls");
-            erros("\t Categoria n„o identificada.");
+            erros("\t Categoria n√£o identificada.");
             system("pause");
             system("cls");
         }
@@ -193,13 +207,13 @@ void login(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], i
         system("cls");
         printf("---------------- LOGIN ----------------\n");
         printf("\t Digite seu nome: ");
-        getchar();
         fgets(nome,50,stdin);
+
         if (strcmp(nome,usuarioAtual.nomeUsuario) < 0 || strcmp(nome,usuarioAtual.nomeUsuario)>0){
-            system("cls");
-            erros("\t Nome n„o cadastrado...\n");
+            printf("%s,%s",usuarios[indice],usuarioAtual);
+            erros("\t Nome n√£o cadastrado...\n");
             int escolha;
-            printf("\t Deseja se cadastrar?\n(1) Sim\n(2) N„o");
+            printf("\t Deseja se cadastrar?\n(1) Sim\n(2) N√£o");
             scanf("%d",&escolha);
             if(escolha == 1){
                 cadastro(usuarioAtual, usuarios, indice);
@@ -220,7 +234,7 @@ void login(struct dadosUsuario usuarioAtual, struct dadosUsuario usuarios[20], i
 
             }else{
                 contador++;
-                printf("\t Usu·rio %s logado",usuarioAtual.nomeUsuario);
+                printf("\n\t Usu√°rio %s logado",usuarioAtual.nomeUsuario);
                 salvaStruct(usuarioAtual, usuarios, indice);
             }
         }
@@ -235,13 +249,13 @@ void cliente(){
 
 }
 
-//INTERFACE DO FUNCION¡RIO
+//INTERFACE DO FUNCION√ÅRIO
 void funcionario(){
     system("cls");
     printf("---------------- VENDEDOR ----------------\n");
 }
 
-//ERRO ADCIONA
+//Identifica√ß√£o de erros;
 void erros(char erro[]){
     printf("Erro em: %s\n", erro);
 }
