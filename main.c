@@ -22,7 +22,7 @@ struct User{
     char name[50];
     char category[10];
     char senha[10];
-}userReturn;
+};
 
 struct Product{
     char nameProd[50];
@@ -34,10 +34,11 @@ struct Product{
 void cliente();
 void vendedor();
 void login(struct User userAtual, struct User users[20], int index);
-void error(char erro[]);
 void inicial();
 void cadastro(struct User userAtual, struct User users[20], int index);
+void salvaEPrintaStruct(struct User userAtual, struct User users[20], int index, int print);
 void voltar();
+void error(char erro[]);
 
 main(){
     //CONFIGURAÇÕES DO SISTEMA
@@ -143,8 +144,8 @@ void cadastro(struct User userAtual, struct User users[20], int index){
                 printf("Cadastrado!");
                 count++;
                 strcpy(userAtual.senha, senha1);
+                salvaEPrintaStruct(userAtual, users, index, 0);
                 login(userAtual, users, index); //USUÁRIO CADASTRADO
-                salvaStruct(userAtual, users, index);
             }
         }
     }
@@ -188,7 +189,7 @@ void login(struct User userAtual, struct User users[20], int index){
             printf("Deseja cadastrar? \n( 1 ) Sim \n( 2 ) Não");
             int escolha;
             if(escolha == 1){
-                cadastro(userAtual, users, index);
+                cadastro(userAtual, users, index); 
             }else{
                 count=0;
                 break;
@@ -204,7 +205,8 @@ void login(struct User userAtual, struct User users[20], int index){
             }else{
                 count++;
                 printf("Usuário logado!");
-                salvaStruct(userAtual, users, index);
+                printf("nome: %s", userAtual.name);
+                //salvaEPrintaStruct(userAtual, users, index, 1);
             }
         }
     }
@@ -227,15 +229,30 @@ void error(char erro[]){
     printf("Erro em: %s\n", erro);
 }
 
-//SALVA TODOS STRUCTS PARA MOSTRAR
-void salvaStruct(struct User userAtual, struct User users[20], int indice){
-    users[indice] = userAtual;
-    mostraCadastrados(users);
-}
-
 //volta
 void voltar(int index){
     inicial(index);
 }
 
-    
+void salvaEPrintaStruct(struct User userAtual, struct User users[20], int index, int print){
+    //CADASTRO MANUAL
+
+    if(print == 0){
+        //NOME
+        strcpy(users[index].name, userAtual.name);
+        //CATEGORIA
+        strcpy(users[index].category, userAtual.category);
+        //SENHA
+        strcpy(users[index].senha, userAtual.senha);
+    }
+
+    //print
+    if(print == 1){
+        system("cls");
+        for(int i = 0; i < 20; i++){
+            printf("#Nome: %s\n", users[i].name);
+            printf("#Categoria: %s\n", users[i].category);
+            printf("####\n");
+        }
+    }
+}
