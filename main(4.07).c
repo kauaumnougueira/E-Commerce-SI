@@ -5,6 +5,9 @@
 #include <string.h>
 
 /*
+
+CADASTRO RESOLVIDO -> REGRA: TEM QUE LEVAR O STRUCT NO PARAMETRO
+
 CORPO DO PROGRAMA:
     # DADOS -> linha 21 a 34;
     # MAIN:
@@ -50,7 +53,7 @@ void clientes(); // Interface para usu�rios do tipo clientes;
 void vendedor(); // Interface para usu�rios do tipo vendedores;
 void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice); // Interface para login de usu�rios;
 void erros(char erro[]); // Aviso de erros na utiliza��o do programa;
-void inicial(int indice);// Interface inicial;
+void inicial(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice);// Interface inicial;
 void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice);// Interface de cadastro de usu�rios;
 void salvaEPrintaStruct(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, int print);
 void voltar(); // Retorno para a interface anterior;
@@ -62,14 +65,15 @@ main(){
 
     int indice = 0;
 
-    inicial(indice);//chamada da fun��o de interface inicial;
-}
-
-void inicial(int indice){
-    system("cls");
-//Inst�ncia do usu�rio:
+    //Inst�ncia do usu�rio:
     struct Usuario usuarioAtual;
     struct Usuario usuarios[20];
+
+    inicial(usuarioAtual, usuarios, indice);//chamada da fun��o de interface inicial;
+}
+
+void inicial(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice){
+    system("cls");
 
     int contador = 0, opcao;
 
@@ -136,7 +140,7 @@ void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
 
             }else if(categoria == 3){
                 system("cls");
-                voltar(indice);
+                voltar(usuarioAtual, usuarios, indice);
                 contador++;
 
             }else{
@@ -151,27 +155,38 @@ void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
         system("cls");
         printf("---------------- CADASTRO ----------------\n");
         printf(" Digite seu nome de usu�rio: ");//adicionar fun��o de verificar se j� existe nome de usu�rio;
-        fgets(usuarioAtual.nomeUsuario,50,stdin);
-        //Input e confirma��o da senha:
-        while(contador == 0){
-            printf(" Digite sua senha (at� 10 caracteres): ");
-            fgets(senha1,10,stdin);
-            printf(" Digite sua senha novamente para confirma��o: ");
-            fgets(senha2,10,stdin);
+        char nome[50];
+        fgets(nome,50,stdin);
 
-            if(strcmp(senha1,senha2)!=0){
-                printf("%s,%s",senha1,senha2);
-                erros("Senhas n�o correspondentes");
-                contador=0;
+        for(int i = 0; i <= 20; i++){
+            if(strcmp(nome, usuarios[i].nomeUsuario) != 0){
+                if(i==20){
+                    strcpy(usuarioAtual.nomeUsuario, nome);
+                    //Input e confirma��o da senha:
+                    while(contador == 0){
+                        printf(" Digite sua senha (at� 10 caracteres): ");
+                        fgets(senha1,10,stdin);
+                        printf(" Digite sua senha novamente para confirma��o: ");
+                        fgets(senha2,10,stdin);
+
+                        if(strcmp(senha1,senha2)!=0){
+                            printf("%s,%s",senha1,senha2);
+                            erros("Senhas n�o correspondentes");
+                            contador=0;
+                        }else{
+                            printf("\n Cadastrado!");
+                            strcpy(usuarioAtual.senha, senha1);
+                            contador++;
+                            salvaEPrintaStruct(usuarioAtual, usuarios, indice, 0);
+                            login(usuarioAtual, usuarios, indice); //Usu�rio cadastrado
+                        }
+                    }
+                }
             }else{
-                printf("\n Cadastrado!");
-                strcpy(usuarioAtual.senha, senha1);
-                contador++;
-                salvaEPrintaStruct(usuarioAtual, usuarios, indice, 0);
-                login(usuarioAtual, usuarios, indice); //Usu�rio cadastrado
+                erros("Usuário ja cadastrado");
+                login(usuarioAtual, usuarios, indice);
             }
         }
-
     }
 }
 //Interface de login:
@@ -208,17 +223,18 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice)
         fgets(nome, 50, stdin);
 
         int quantidadeDeErros = 0;
-        for(int i = 0; i < 20; i++){
-            if(strcmp(nome, usuarios[i].nomeUsuario) < 0 || strcmp(nome, usuarios[i].nomeUsuario)){
-                quantidadeDeErros++; //SERVE PARA ACHAR O INDICE E SABER SE ESTA SALVO
+        for(int i = 0; i <= 20; i++){
+            if(strcmp(nome, usuarios[i].nomeUsuario) != 0){
                 //SE NÃO ACHAR NO BANCO
-                if(quantidadeDeErros == 20){
+                if(i == 20){
                     erros("Nome n�o cadastrado...\n");
                     int escolha;
                     printf("Deseja se cadastrar?\n(1) Sim\n(2) N�o\n> ");
                     scanf("%d", &escolha);
                     if(escolha == 1){ 
                         cadastro(usuarioAtual, usuarios, indice);
+                    }else if (escolha == 2){
+                        login(usuarioAtual, usuarios, indice);
                     }else{
                         contador = 0;
                         break;
@@ -229,7 +245,7 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice)
             }else{
                 printf("Digite sua senha cadastrada: ");
                 fgets(senha, 10, stdin);
-                if(strcmp(senha,usuarioAtual.senha)<0 || strcmp(senha,usuarioAtual.senha)>0){
+                if(strcmp(senha, usuarios[i].senha) < 0 || strcmp(senha, usuarios[i].senha) > 0){
                     printf(" Senha digitada incorreta");
                     contador = 0;
                     break;
@@ -237,15 +253,9 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice)
                     contador++;
                     printf("\nUsu�rio %s logado",usuarioAtual.nomeUsuario);
                     salvaEPrintaStruct(usuarioAtual, usuarios, indice, 2);
-                    inicial(indice);
+                    inicial(usuarioAtual, usuarios, indice);
                 }
             }
-        }
-
-        if (strcmp(nome, usuarioAtual.nomeUsuario) < 0 || strcmp(nome, usuarioAtual.nomeUsuario) > 0){
-            
-        }else{
-            
         }
     }
 }
@@ -292,8 +302,8 @@ void salvaEPrintaStruct(struct Usuario usuarioAtual, struct Usuario usuarios[20]
 }
 
 //volta
-void voltar(int indice){
-    inicial(indice);
+void voltar(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice){
+    inicial(usuarioAtual, usuarios, indice);
 }
 
 
