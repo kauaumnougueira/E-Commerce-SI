@@ -157,7 +157,7 @@ void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
         char senha1[10], senha2[10]; //senha do Usu�rio;
         //Input de dados do novo usu�rio:
         system("cls");
-        printf("---------------- CADASTRO ----------------\n");
+        printf("---------------- CADASTRO ________________-\n");
         printf(" Digite seu nome de usu�rio: ");//adicionar fun��o de verificar se j� existe nome de usu�rio;
         char nome[50];
         fgets(nome,50,stdin);
@@ -285,9 +285,8 @@ void vendedor(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
             printf("quantidade:\n");
             scanf("%d", &produtoAtual.quantidade);
             system("cls");
-            salvaStructProduto(produtoAtual, produtos, index2);
+            salvaStructProduto(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
 
-            contador++;
         }else if(escolha == 2){
             system("cls");
             printf("---------------- Menu de remoção de produtos ----------------\n");
@@ -310,13 +309,13 @@ void vendedor(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
                     system("pause");
                 }
             }
-            contador++;
+
         }else if(escolha == 3){
-            salvaStructProduto(produtoAtual, produtos, index2, 1);
-            system("\npause");
+            printaStructProduto(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
+            system("pause");
         }
         else if(escolha == 4){
-            voltar(usuarioAtual, usuarios, indice, produtos, index2);
+            voltar(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
         }
         else{
             contador = 0;
@@ -353,20 +352,28 @@ void salvaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20]
             produtos[index2].quantidade = produtoAtual.quantidade;
 
             index2++;
+
             printf("Produto cadastrado\n");
             system("pause");
             vendedor(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
 
-
 }
 void printaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2){
 
+    system("cls");
+    int k = 0;
     for(int i = 0; i < index2; i++){
-        printf("#Nome do Produto: %s", produtos[i].nomeProduto);
-        printf("#Preco: %2.f\n", produtos[i].preco);
-        printf("#Quantidade: %d\n", produtos[i].quantidade);
-        printf("####\n");
+        if(produtos[i].preco != 0){
+            printf("______________________\n#Nome do Produto: %s", produtos[i].nomeProduto);
+            printf("#Preco: %2.f\n", produtos[i].preco);
+            printf("#Quantidade: %d\n", produtos[i].quantidade);
+            printf("####\n");
+            k++;
+        }
     }
+    if(k==0){
+            printf("\nNenhum produto cadastrado!\n");
+        }
 
 }
 
