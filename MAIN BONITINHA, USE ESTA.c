@@ -25,7 +25,7 @@ CORPO DO PROGRAMA:
             > consultar estoque de produtos cadastrados
             > remover produto
 
-    # FUN��ES -> declara��o inicial na linha 36 - 43, defini��es -> linha 55-
+    # FUN��ES -> declaracoes inicial na linha 36 - 43, definicoes -> linha 55-
 */
 
 /* O que falta/problemas:
@@ -48,25 +48,26 @@ struct Produto{    //Struct de armazenamento de dados do produto do usu�rio(ve
     float preco;
 };
 
-//Declara��o inicial de fun��es do programa:
-void clientes(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2); // Interface para usu�rios do tipo clientes;
+//Declara��o inicial de funcoes do programa:
+void cliente(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2); // Interface para usu�rios do tipo clientes;
 void vendedor(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2); // Interface para usu�rios do tipo vendedores;
 void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2); // Interface para login de usu�rios;
-void erros(char erro[]); // Aviso de erros na utiliza��o do programa;
+void erros(char erro[]); // Aviso de erros na utilizao do programa;
 void inicial(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2);// Interface inicial;
 void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2);// Interface de cadastro de usu�rios;
 void salvaEPrintaStruct(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2);
-void voltar(); // Retorno para a interface anterior;
+void voltar(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2); // Retorno para a interface anterior;
 
 int main(){
-    //Configura��es do sistema:
+    //Configuracoes do sistema:
     setlocale(LC_ALL,"Portuguese");
     system("color A");
+    system("mode 100");
 
     int indice = 0;
     int index2 = 0;
 
-    //Inst�ncia do usu�rio:
+    //Instancia do usuario:
     struct Usuario usuarioAtual;
     struct Usuario usuarios[20];
 
@@ -184,6 +185,7 @@ void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
                             erros("Senhas nao correspondentes");
                             contador=0;
                         }else{
+                            system("cls");
                             printf("\n Cadastrado!");
                             strcpy(usuarioAtual.senha, senha1);
                             contador++;
@@ -193,12 +195,14 @@ void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
                     }
                 }
             }else{
+                system("cls");
                 erros("Usuário ja cadastrado");
                 login(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
             }
         }
     }
 }
+
 //Interface de login:
 void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2){
     system("cls");
@@ -207,7 +211,6 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice,
     contador = 0;
     while(contador == 0){
         char nome[50], senha[10];
-        system("cls");
         printf("_________________LOGIN___________________");
         printf("\n|   Digite seu nome:\n> ");
         fgets(nome, 50, stdin);
@@ -221,6 +224,7 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice,
                     printf("Deseja se cadastrar?\n(1) Sim\n(2) Nao\n> ");
                     scanf("%d", &escolha);
                     if(escolha == 1){
+                        system("cls");
                         cadastro(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
                     }else if (escolha == 2){
                         inicial(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
@@ -239,14 +243,17 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice,
                     contador = 0;
                     break;
                 }else{
+                    system("cls");
                     contador++;
-                    printf("\nUsuario %s logado",usuarioAtual.nomeUsuario);
+                    printf("Usuario: %s logado.\n",usuarioAtual.nomeUsuario);
                     salvaEPrintaStruct(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
 
                     if(strcmp(usuarios[i].categoriaUsuario, "cliente") == 0){
-                        cliente();
+                        cliente(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
+                        system("cls");
                     }if(strcmp(usuarios[i].categoriaUsuario, "vendedor") == 0){
                         vendedor(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
+                        system("cls");
                     }else{
 
                     }
@@ -255,21 +262,23 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice,
         }
     }
 }
+
 //INTERFACE DOS CLIENTES:
 void cliente(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2){
     int contador = 0;
     while(contador == 0){
-        system("cls");
         printf("_________________CATALOGO_________________\n");
         printf("|_______________E-Commerce_______________|\n");
-        printf("\nProdutos: ");
+        printf("\nPRODUTOS: ");
 
         int quantidadeprodutos = 0;
         for(int i = 0; i < index2; i++){
-            if(produtos[i].preco != 0){
-                printf("\n    %s", produtos[i].nomeProduto);
-                printf("#R$ %2.f\n", produtos[i].preco);
-                printf("#Quantidade: %d\n", produtos[i].quantidade);
+            if(produtos[i].quantidade != 0){
+                printf("\n|________________________________________");
+                printf("\n|Codigo do produto ( %d )\n|", i+1);
+                printf("\n|    %s", produtos[i].nomeProduto);
+                printf("|    R$ %.2f\n", produtos[i].preco);
+                printf("|    Quantidade: %d", produtos[i].quantidade);
                 quantidadeprodutos++;
             }
         }
@@ -277,16 +286,41 @@ void cliente(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indic
             printf("\nNenhum produto cadastrado!\n");
         }
 
-        printf("__________________________________________\n|                                        |\n");
+        printf("\n|_________________________________________\n|                                        |\n");
         printf("|  O que voce deseja?                    |\n|  ( 1 ) Comprar produto                 |\n|  ( 2 ) Sair                            |");
         printf("\n|________________________________________|\n> ");
         int escolha;
         scanf("%d", &escolha);
         getchar();
-        if(escolha == 2){
-            voltar(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
+        if(escolha == 1){
+            if(quantidadeprodutos>0){
+                int codigoProduto;
+                printf("Informe o codigo do produto: ");
+                scanf("%d", &codigoProduto);
+                    for(int i = 0; i < index2; i++){
+                        if(produtos[i].quantidade != 0 && codigoProduto == (i+1)){
+                            printf("Quantas unidades de %s voce deseja comprar?\n> ", produtos[i].nomeProduto);
+                            int unidades;
+                            scanf("%d", &unidades);
+                            getchar();
+                                if(produtos[i].quantidade - unidades < 0 || unidades<0){
+                                    printf("Nao foi possivel efetuar a venda!\n");
+                                    system("pause");
+                                    system("cls");
+                                    }else{
+                                        produtos[i].quantidade -= unidades;
+                                        printf("\nCompra efetuada!\n");
+                                        system("pause");
+                                        system("cls");
+                                    }
+                        }
+            }
         }
 
+
+        }else if(escolha == 2){
+            voltar(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
+        }
     }
 }
 
@@ -369,7 +403,6 @@ void salvaEPrintaStruct(struct Usuario usuarioAtual, struct Usuario usuarios[20]
         //SENHA
         strcpy(usuarios[indice].senha, usuarioAtual.senha);
 }
-
 void salvaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2){
 
             //NOME DO PRODUTO
@@ -391,9 +424,9 @@ void printaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20
     system("cls");
     int quantidadeprodutos = 0;
     for(int i = 0; i < index2; i++){
-        if(produtos[i].preco != 0){
+        if(produtos[i].quantidade != 0){
             printf("______________________\n#Nome do Produto: %s", produtos[i].nomeProduto);
-            printf("#Preco: R$ %2.f\n", produtos[i].preco);
+            printf("#Preco: R$ %.2f\n", produtos[i].preco);
             printf("#Quantidade: %d\n", produtos[i].quantidade);
             printf("####\n");
             quantidadeprodutos++;
