@@ -62,7 +62,6 @@ void printaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20
 void salvaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice, struct Produto produtoAtual, struct Produto produtos[20], int index2);
 void erros(char erro[]); // Aviso de erros na utilizao do programa;
 
-salvaEPrintaStruct
 
 int main()
 {
@@ -315,7 +314,6 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice,
                     if(strcmp(usuarios[i].categoriaUsuario, "cliente") == 0)
                     {
                         cliente(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
-                        system("cls");
                     }
                     if(strcmp(usuarios[i].categoriaUsuario, "vendedor") == 0)
                     {
