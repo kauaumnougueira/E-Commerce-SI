@@ -126,7 +126,7 @@ void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
         }
     }
     if(existe == 1){
-        printf(" Usuário já cadastrado\nRedirecionando para login...");
+        printf(" Usuï¿½rio jï¿½ cadastrado\nRedirecionando para login...");
         system("pause");
         system("cls");
         login(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
@@ -199,7 +199,7 @@ void cadastro(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
                 }
             }else{
                 system("cls");
-                erros("Usuário ja cadastrado");
+                erros("Usuï¿½rio ja cadastrado");
                 login(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
             }
         }
@@ -238,7 +238,7 @@ void login(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indice,
                 }
             //SE ACHAR NO BANCO
             }else{
-                //i E A POSIÇÃO
+                //i E A POSIï¿½ï¿½O
                 printf("|   Digite sua senha:\n> ");
                 fgets(senha, 10, stdin);
                 if(strcmp(senha, usuarios[i].senha) != 0){
@@ -392,7 +392,7 @@ void vendedor(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
 
         }else if(escolha == 2){
             system("cls");
-            printf("_________________Menu de remoção de produtos_________________\n");
+            printf("_________________Menu de remoï¿½ï¿½o de produtos_________________\n");
             printf("|   Informe o nome do produto:\n> ");
             char nome[50];
             fgets(nome, 50, stdin);
@@ -401,7 +401,7 @@ void vendedor(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
                 if(strcmp(produtos[i].nomeProduto, nome) != 0){
                     if(i == index2){
                         system("cls");
-                        erros("Produto não cadastrado");
+                        erros("Produto nï¿½o cadastrado");
                         vendedor(usuarioAtual, usuarios, indice, produtoAtual, produtos, index2);
                     }
                 }else{
@@ -422,7 +422,7 @@ void vendedor(struct Usuario usuarioAtual, struct Usuario usuarios[20], int indi
         }
         else{
             contador = 0;
-            erros("Escolha não identificada, favor escolher uma das alternativas...");
+            erros("Escolha nï¿½o identificada, favor escolher uma das alternativas...");
             system("pause");
             break;
         }
@@ -448,7 +448,7 @@ void salvaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20]
 
             //NOME DO PRODUTO
             strcpy(produtos[index2].nomeProduto, produtoAtual.nomeProduto);
-            //PREÇOS
+            //PREï¿½OS
             produtos[index2].preco = produtoAtual.preco;
             //QUANTIDADE
             produtos[index2].quantidade = produtoAtual.quantidade;
@@ -476,7 +476,7 @@ void printaStructProduto(struct Usuario usuarioAtual, struct Usuario usuarios[20
         }
     }
     if(quantidadeprodutos==0){
-            printf("\nNão ha nenhum produto cadastrado.\n");
+            printf("\nNï¿½o ha nenhum produto cadastrado.\n");'
         }
 
 }
