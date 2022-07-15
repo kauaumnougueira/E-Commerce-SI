@@ -4,27 +4,6 @@
 #include <conio.h>
 #include <string.h>
 
-/*
-CORPO DO PROGRAMA:
-    # DADOS -> linha 21 a 34;
-    # MAIN:
-    01 - INTERFACE INICIAL
-    02 - INTERFACE PARA CADASTRO
-    03 - INTERFACE DE LOGIN
-        3.1- INTERFACE DE CLIENTES\
-            > ver produtos no sistema
-            > comprar produto
-            > devolucao de produto
-            > produtos comprados
-
-        3.2- INTERFACE DE FUNCIONARIOS
-            > cadastrar produtos
-            > consultar estoque de produtos cadastrados
-            > remover produto
-
-    # FUNCOES -> declaracoes inicial na linha 36 - 43, definicoes -> linha 55-
-*/
-
 //# DADOS:
 struct Usuario{// Struct de armazenamento de dados do usuario(cliente/vendedor) do programa:
     char nomeUsuario[70];
@@ -374,11 +353,21 @@ void vendedor(){
                     produtos[i].quantidade += quantidadeadd;
                     vendedor();
                 }else if(i == indice2){
-                    printf("|   Informe o valor do produto:\n> R$ ");
-                    scanf("%f", &produtoAtual.preco);
-                    printf("|   Informe a quantidade:\n> ");
-                    scanf("%d", &produtoAtual.quantidade);
-                    system("cls");
+                    int aux = 0;
+                    while(aux == 0){
+                        printf("|   Informe o valor do produto:\n> R$ ");
+                        scanf("%f", &produtoAtual.preco);
+                        printf("|   Informe a quantidade:\n> ");
+                        scanf("%d", &produtoAtual.quantidade);
+                        if(produtoAtual.preco <= 0 || produtoAtual.quantidade <= 0){
+                            printf("Valor ou Qunatidade informados incorretamente\n por favor nao inserir numeros negativos ou zerados\n.");
+                            system("pause");
+                            aux = 0;
+                        }else{
+                            aux++;
+                        }
+                        system("cls");
+                    }
                     salvaStructProduto();
                     break;
                 }
